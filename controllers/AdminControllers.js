@@ -119,7 +119,9 @@
                                           next(error)
                                      }
                           }
-                    
+                       
+                  // 6. update user
+
     module.exports = {UserDetailsAll,
                      AllMessagefromUser,
                      GetInstructorDetails,
