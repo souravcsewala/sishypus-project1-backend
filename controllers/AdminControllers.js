@@ -3,7 +3,8 @@
 
     const ContactModel=require("../models/contactModel");
     const ErrorHandeler = require("../special/errorHandelar");
-      
+     const WhiteCardModel=require("../models/CardModel") 
+     const cloudinary = require("cloudinary");
 
     //1. get user details -- admin power
      
@@ -120,12 +121,176 @@
                                      }
                           }
                        
-                  // 6. update user
+                  // 6. update user by admin -- admin power 
+                       const UpdateUser=async(req,res,next)=>{
+                                try{
+                                    const {newName,newEmail,newRole}=req.body;
+                                    const newUpdateByAdmin={
+                                          name:newName,
+                                          email:newEmail,
+                                          role:newRole
+                                    }
+                                                  const UpdateUser= await UserModel.findByIdAndUpdate(req.params.id, newUpdateByAdmin,{
+                                                    new:true,
+                                                    runValidators:true,
+                                                    useFindAndModify:false
+                                                 })
+                                                     if(!UpdateUser){
+                                                        return next(new ErrorHandeler(" updated fail",404))
+                                                     }
+                                                      res.status(200).json({
+                                                         message:"user update succesfully",
+                                                         success:true,
+                                                           UpdateUser
+           
+                                                      })
+                                }catch(error){
+                                      console.log(`the error from update user by admin ${error}`)
+                                         next(error)
+                                }
+                       }
+                           // 7. create white card by admin -- admin power 
+                              const CreateCard=async(req,res,next)=>{
+                                     try{
+                                        console.log('Request Body:', req.body); 
+                                        if (!req.files || !req.files.pdfFile) {
+                                            return next(new ErrorHandeler("Please upload a PDF file",401));
+                                          }
+                                        const file = req.files.pdfFile;
+                                        console.log("req.files.pdfFile",file);
+                                        const filePath = file.tempFilePath;
+                                        console.log("tempFilePath",filePath);
+                                        if (!filePath) {
+                                            return next(new Error("Temporary file path is missing or invalid"));
+                                          }
+                                        const myCloud = await cloudinary.v2.uploader.upload(filePath, {
+                                          folder: "pdf", 
+                                          resource_type: 'auto', 
+                                        });
+                                               console.log("myCloud",myCloud)
+                                          const { title,readTime,tagName} =req.body;
+                                          if(!title || ! readTime || ! tagName){
+                                                return next(new ErrorHandeler("plz provide all details",401))
+                                          }
+                                          const CreateCard= await WhiteCardModel.create({
+                                            title,
+                                            readTime,
+                                            tagName,
+                                            pdfFile:{
+                                              public_id:file.name,
+                                              url:  myCloud.secure_url
+                                            }
+                                       })
+                                          res.status(201).send({
+                                             success:true,
+                                             message:"new card created",
+                                             CreateCard
+                                          })
+                                     }catch(error){  
+                                        console.error(error)
+                                            next(error)
+                                     }
+                              }
+                 // 8. update white card by admin -- admin power 
+                 
+                 const UpdateCard = async (req, res, next) => {
+                    try {
+                      const { Newtitle, NewreadTime, NewtagName } = req.body;
+                  
+                      const newdata = {
+                        title: Newtitle,
+                        readTime: NewreadTime,
+                        tagName: NewtagName
+                      };
+                  
+                     
+                      const existingCard = await WhiteCardModel.findById(req.params.id);
+                      if (!existingCard) {
+                        return next(new ErrorHandeler("Card not found", 404));
+                      }
+                  
+                     
+                      if (req.files && req.files.pdfFile) {
+                        const file = req.files.pdfFile;
+                        console.log("req.files.pdfFile", file);
+                  
+                       
+                        const filePath = file.tempFilePath;
+                        console.log("tempFilePath", filePath);
+                  
+                        if (!filePath) {
+                          return next(new Error("Temporary file path is missing or invalid"));
+                        }
+                  
+                       
+                        if (existingCard.pdfFile && existingCard.pdfFile.public_id) {
+                          await cloudinary.v2.uploader.destroy(existingCard.pdfFile.public_id, { resource_type: 'auto' });
+                        }
+                  
+                                         
+                  
+                        
+                        const myCloud = await cloudinary.v2.uploader.upload(filePath, {
+                          folder: "pdf",
+                          resource_type: 'auto',
+                         
+                        });
+                        console.log("myCloud", myCloud);
+                  
+                        newdata.pdfFile = {
+                          public_id: file.name,
+                          url: myCloud.secure_url,
+                        };
+                      }
+                  
+                     const updateCard = await WhiteCardModel.findByIdAndUpdate(req.params.id, newdata, {
+                        new: true,
+                        runValidators: true,
+                        useFindAndModify: false,
+                      });
+                  
+                      if (!updateCard) {
+                        return next(new ErrorHandeler("Card not updated", 401));
+                      }
+                  
+                      res.status(200).json({
+                        success: true,
+                        message: "Card updated successfully",
+                        updateCard
+                      });
+                    } catch (error) {
+                      console.error("the error from update card by admin", error);
+                      next(error);
+                    }
+                  };
+                  // 9. delete a card byadmin --admin power 
+
+                   const CardDelete=async(req,res,next)=>{
+                         try{
+                            const card=await WhiteCardModel.findByIdAndRemove(req.params.id);
+                                 if(!card){
+                                    return next(new ErrorHandeler("Card not found",404));
+                                 }
+                                    await WhiteCardModel.deleteOne({_id:req.params.id})
+                                    res.status(200).json({
+                                        success:true,
+                                        message:"card delete successfully",
+                                        totalcard:await WhiteCardModel.countDocuments()
+                                   })   
+                         }catch(error){
+                              console.log("error from delete a card",error)
+                                next(error)
+                         }
+                   }
 
     module.exports = {UserDetailsAll,
                      AllMessagefromUser,
                      GetInstructorDetails,
                      UpdateInstructor,
-                     RemoveInstructor};
+                     RemoveInstructor,
+                    UpdateUser,
+                    CreateCard,
+                    UpdateCard ,
+                    CardDelete};
     
         
