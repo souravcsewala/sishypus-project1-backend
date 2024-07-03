@@ -69,24 +69,7 @@ const UserLogin=async(req,res,next)=>{
      }
 
 
-     // 4. get the webniar details -- user protal 
-        
-           const  GetWebniarDetails=async (req,res,next)=>{
-                 try{
-                        const GetWebniar= await WebniarModel.find({});
-                             if(!GetWebniar){
-                                return next (new ErrorHandeler("there is now no webniar",404))
-                             }
-                                 res.status(200).send({
-                                      success:true,
-                                      message:"there is webniar details",
-                                      GetWebniar
-                                 })
-                 }catch(error){
-                     console.log("get error from getwebniar detauls user protal",error)
-                       next(error)
-                 }
-           }
+     
 
 
 
@@ -94,5 +77,4 @@ const UserLogin=async(req,res,next)=>{
 
 
 
-
-module.exports = { UserRegister ,UserLogin,userLogout,GetWebniarDetails};
+module.exports = { UserRegister ,UserLogin,userLogout};

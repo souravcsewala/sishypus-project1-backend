@@ -42,7 +42,9 @@
                 support_server.use("/sisyphus/project1/api",require("./Routes/AuthRoute"))
                 support_server.use("/sisyphus/project1/api",require("./Routes/MessageRoute"))
                 support_server.use("/sisyphus/project1/api",require("./Routes/AdminRoute"))
+                support_server.use("/sisyphus/project1/api",require("./Routes/userinfoRoute"))
                 support_server.use("/sisyphus/project1/api",require("./Routes/instructorRoute"))
+               
 
                     // error middileware
                 support_server.use(errorMiddliware)

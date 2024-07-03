@@ -2,27 +2,40 @@
       const WebniarModel=require("../models/WebniarModel");
 const ErrorHandelar = require("../special/errorHandelar");
 
-      // 1. upload webniar url by instructor -- instructor power 
+      // 1.  get the list who submit free consultancy list 
 
-             const CreateWebniar=async(req,res,next)=>{
-                   try{
-                           const{ title, description, Url}=req.body
-                               if(!title || !description || !Url){
-                                    return next (new ErrorHandelar("plz provide all details",401))
-                               }
-                                 const Webniar= await WebniarModel.create({
-                                        title,
-                                        description,
-                                        Url,
-                                 })
-                                    res.status(201).send({
-                                         success:true,
-                                         message:"webniar uploaded successfully",
-                                         Webniar
-                                    })
-                   }catch(error){
-                        console.log("this error from CreateWebniar ",error)
-                   }
-             }
+      //2.create up coming events 
 
-                 module.exports={CreateWebniar}
+      // 3. update up coming events 
+
+      // 4. delete up coming events 
+
+      // 5. create german class start date 
+
+      //6.  update german class start date 
+
+      // 7. delete german class start date 
+
+      // 8. german course create 
+
+      // 9. german course update 
+
+      // 10. german course delete 
+
+      // 11. excel course  create
+      
+      // 12. excel course  update
+
+      // 13.  excel course  delete 
+
+      // 14. create excel webniar date And url 
+
+      // 15. update excel webniar date And url 
+
+      // 16. delete excel webniar date And url 
+
+      // 17. get vthe list who resigtration on excel webniar 
+
+             
+
+                 
