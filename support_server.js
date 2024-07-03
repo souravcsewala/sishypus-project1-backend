@@ -7,7 +7,8 @@
                    const bodyParser = require("body-parser");
                   const support_server=express();
                   const cloudinary = require("cloudinary")
-                  var cors = require('cors')           
+                  var cors = require('cors')  
+                  const morgan = require("morgan");         
                         // middileware for json,file,cookies,body parsing
                          support_server.use(express.json());
                          support_server.use(cookieParser());
@@ -24,6 +25,9 @@
         
       };
       support_server.use(cors(corsOptions));
+
+           // Morgan for logging
+     support_server.use(morgan(':method :url :status :res[content-length] - :response-time ms :remote-addr'));
 
                        // database connect come on sourav
                        DataBaseconnection();
