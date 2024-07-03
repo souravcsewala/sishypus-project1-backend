@@ -1,6 +1,6 @@
 const express = require("express");
 const { UserRegister ,UserLogin,userLogout} = require("../controllers/Authcontrollers");
- const {isAuthCheak}= require("../middileware/IsAuthCheak")
+ const {isAuthCheak}= require("../middileware/IsAuthCheck")
 const Router = express.Router();
 
 // 1. User register route

@@ -1,9 +1,9 @@
-class ErrorHandelar extends Error{
-    constructor(message,statuscode){
-        super(message)
-        this.statuscode=statuscode;
-           Error.captureStackTrace(this,this.constructor)
-    }
+class ErrorHandelar extends Error {
+  constructor(message, statuscode) {
+    super(message);
+    this.statuscode = statuscode;
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
- module.exports=ErrorHandelar
+module.exports = ErrorHandelar;

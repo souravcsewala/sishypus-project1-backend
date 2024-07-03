@@ -1,8 +1,8 @@
 
 const express = require("express");
 
-const{isAuthCheak}=require("../middileware/IsAuthCheak")
-const{isAdminCheak}=require("../middileware/IsAdminCheak")
+const{isAuthCheak}=require("../middileware/IsAuthCheck")
+const{isAdminCheak}=require("../middileware/IsAdminCheck")
 const { CreateCard,
     UpdateCard,
     CardDelete,
