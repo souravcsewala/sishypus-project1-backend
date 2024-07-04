@@ -5,13 +5,13 @@ const ErrorHandeler = require("../special/errorHandelar");
 
 const SendMessage = async (req, res, next) => {
   try {
-    const { Firstname, Lastname, email, company, phone, message } = req.body;
-    if (!Firstname || !Lastname || !email || !company || !phone || !message) {
+    const { firstname, lastname, email, company, phone, message } = req.body;
+    if (!firstname || !lastname || !email || !company || !phone || !message) {
       return next(new ErrorHandeler("Please provide all details", 401));
     }
     const Message = await ContactModel.create({
-      Firstname,
-      Lastname,
+      firstname,
+      lastname,
       email,
       company,
       phone,
