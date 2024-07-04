@@ -1,7 +1,7 @@
 
 const express = require("express");
 const { SendMessage} = require("../controllers/UserMessagecon");
-const{isAuthCheak}=require("../middileware/IsAuthCheak")
+const{isAuthCheak}=require("../middileware/IsAuthCheck")
 const Router = express.Router();
 
     //1. user send Message

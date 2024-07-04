@@ -1,7 +1,7 @@
 
 const express = require("express");
 
-const{isAuthCheak}=require("../middileware/IsAuthCheak")
+const{isAuthCheak}=require("../middileware/IsAuthCheck")
 
 const{GetWhiteCard,
     GetAllEvents,

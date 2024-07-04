@@ -1,5 +1,4 @@
-
-      const WebniarModel=require("../models/WebniarModel");
+const WebniarModel=require("../models/WebniarModel");
 const ErrorHandelar = require("../special/errorHandelar");
 
       // 1.  get the list who submit free consultancy list 
