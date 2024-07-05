@@ -49,7 +49,7 @@ const Router = express.Router();
     Router.route("/admin/getAllinstructor").get(isAuthCheak,isAdminCheak("admin"),GetInstructorDetails)
 
     //4. update instructor by admin -- admin power 
-    Router.route("/admin/update/instructor/:id").get(isAuthCheak,isAdminCheak("admin"), UpdateInstructor)
+    Router.route("/admin/update/instructor/:id").put(isAuthCheak,isAdminCheak("admin"), UpdateInstructor)
 
     // 5. delete any instructor by admin -- admin power 
      Router.route("/admin/delete/instructor/:id").delete(isAuthCheak,isAdminCheak("admin"),RemoveInstructor )
