@@ -64,7 +64,7 @@ const Router = express.Router();
     Router.route("/admin/whitepaper/update/:id").put(isAuthCheak,isAdminCheak("admin"), UpdateCard)
 
    //9 .  delete white paper card by admin -- admin power 
-   Router.route("/admin/whitepaper/remove/:id").put(isAuthCheak,isAdminCheak("admin"),CardDelete )
+   Router.route("/admin/whitepaper/remove/:id").delete(isAuthCheak,isAdminCheak("admin"),CardDelete )
 
    //10. get the list who are register for free consultation
    Router.route("/admin/getConsultancy").get(isAuthCheak,isAdminCheak("admin"), GetConsultancy)
