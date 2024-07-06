@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
         const ErrorHandeler=require("../special/errorHandelar")
     
     const errorMiddliware=(err,req,res,next)=>{
@@ -35,18 +35,10 @@
           message: err.message,
           statuscode:err.statuscode
         });
-=======
-const errorMiddliware = (err, req, res, next) => {
-  err.message = err.message || "server internal problem";
-  err.statuscode = err.statuscode || 500;
-  res.status(err.statuscode).json({
-    success: false,
-    message: err.message,
-    statuscode: err.statuscode,
-  });
+
 
   next();
 };
->>>>>>> 3d2794479619f19f546b8dc27596a276eb7f8c65
+
 
 module.exports = errorMiddliware;

@@ -49,7 +49,7 @@ const Router = express.Router();
     Router.route("/admin/getAllinstructor").get(isAuthCheak,isAdminCheak("admin"),GetInstructorDetails)
 
     //4. update instructor by admin -- admin power 
-    Router.route("/admin/update/instructor/:id").get(isAuthCheak,isAdminCheak("admin"), UpdateInstructor)
+    Router.route("/admin/update/instructor/:id").put(isAuthCheak,isAdminCheak("admin"), UpdateInstructor)
 
     // 5. delete any instructor by admin -- admin power 
      Router.route("/admin/delete/instructor/:id").delete(isAuthCheak,isAdminCheak("admin"),RemoveInstructor )
@@ -64,7 +64,7 @@ const Router = express.Router();
     Router.route("/admin/whitepaper/update/:id").put(isAuthCheak,isAdminCheak("admin"), UpdateCard)
 
    //9 .  delete white paper card by admin -- admin power 
-   Router.route("/admin/whitepaper/remove/:id").put(isAuthCheak,isAdminCheak("admin"),CardDelete )
+   Router.route("/admin/whitepaper/remove/:id").delete(isAuthCheak,isAdminCheak("admin"),CardDelete )
 
    //10. get the list who are register for free consultation
    Router.route("/admin/getConsultancy").get(isAuthCheak,isAdminCheak("admin"), GetConsultancy)
@@ -116,7 +116,7 @@ const Router = express.Router();
 Router.route("/admin/germanclass/update/:id").put(isAuthCheak,isAdminCheak("admin"),UpdateGermanClass)
 
 //26. remove german class date 
-Router.route("/admin/excelwebniar/remove/:id").delete(isAuthCheak,isAdminCheak("admin"),DeleteGermanClass)
+Router.route("/admin/germanclassdate/remove/:id").delete(isAuthCheak,isAdminCheak("admin"),DeleteGermanClass)
 
 //27. get white card
 Router.route("/admin/getwhitecard").get(isAuthCheak,isAdminCheak("admin"),GetWhiteCard)

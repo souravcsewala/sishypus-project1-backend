@@ -272,10 +272,10 @@ const UpdateCard = async (req, res, next) => {
 
 const CardDelete = async (req, res, next) => {
   try {
-    const card = await WhiteCardModel.findByIdAndRemove(req.params.id);
+     const card = await WhiteCardModel.findById(req.params.id);
     if (!card) {
       return next(new ErrorHandeler("Card not found", 404));
-    }
+     }
     await WhiteCardModel.deleteOne({ _id: req.params.id });
     res.status(200).json({
       success: true,
@@ -442,7 +442,7 @@ const DeleteGermanClass = async (req, res, next) => {
     if (!FindGermanClass) {
       return next(new ErrorHandeler("class not found", 404));
     }
-    await FindGermanClass.remove(); // here i can use deleteOne and findByIdAndRemove
+    await GermanClassModel.deleteOne({_id:req.params.id}); // here i can use deleteOne and findByIdAndRemove
     res.status(200).json({
       message: "German class Delete Successfully",
       success: true,
@@ -513,7 +513,8 @@ const DeleteGermanCourse = async (req, res, next) => {
     if (!FindGermanCourse) {
       return next(new ErrorHandeler("course not found", 404));
     }
-    await FindGermanCourse.remove(); // here i can use deleteOne and findByIdAndRemove
+    //await FindGermanCourse.remove(); // here i can use deleteOne and findByIdAndDelete 
+    await GermanCourseModel.deleteOne({_id:req.params.id})
     res.status(200).json({
       message: "German course Delete Successfully",
       success: true,
@@ -582,7 +583,7 @@ const DeleteExcelCourse = async (req, res, next) => {
     if (!FindExcelCourse) {
       return next(new ErrorHandeler("course not found", 400));
     }
-    await FindExcelCourse.remove();
+    await ExcelCourseModel.deleteOne({_id:req.params.id})
     res.status(200).json({
       message: "Excel course Delete Successfully",
       success: true,
@@ -648,7 +649,7 @@ const DeleteExcelWEbniar = async (req, res, next) => {
     if (!FindExcelWebniar) {
       return next(new ErrorHandeler("webniar not found", 404));
     }
-    await FindExcelWebniar.remove();
+        await  ExcelWebniarModel.deleteOne({_id:req.params.id})
     res.status(200).json({
       message: "Excel webniar Delete Successfully",
       success: true,
