@@ -28,7 +28,11 @@
     const message = `Json Web Token is Expired, Try again `;
     err = new ErrorHandeler(message, 400);
   }
-
+     // Mongoose validation error
+  if (err.name === "ValidationError") {
+    const errors = Object.values(err.errors).map((error) => error.message);
+    err = new ErrorHandeler(errors, 400);
+  }
 
         res.status(err.statuscode).json({
           success: false,

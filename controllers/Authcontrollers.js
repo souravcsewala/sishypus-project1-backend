@@ -22,6 +22,10 @@ const UserRegister = async (req, res, next) => {
       user,
     });
   } catch (error) {
+    if (error.name === "ValidationError") {
+      const errors = Object.values(error.errors).map((err) => err.message);
+      return next(new ErrorHandeler(errors, 400)); 
+    }
     next(error);
     console.log("Error from UserRegister", error);
   }
@@ -44,7 +48,7 @@ const UserLogin = async (req, res, next) => {
         new ErrorHandeler("plz provide email or password correctly", 404)
       );
     }
-    sendToken(user, 201, res);
+    sendToken(user, 200, res);
   } catch (error) {
     next(error);
     console.log("error from user login ", error);

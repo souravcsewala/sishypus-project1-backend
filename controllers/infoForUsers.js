@@ -7,7 +7,7 @@ const GermanClassModel = require("../models/GerManClassStartModel");
 const GermanCourseModel = require("../models/GermanCourseModel");
 const ExcelCourseModel = require("../models/ExelCourseModel");
 const ExcelWebniarModel = require("../models/ExcelWebniarModel");
-
+const UserModel=require("../models/userModel")
 //1. user post for free consultation -- for user
 const RegisterForconsaltation = async (req, res, next) => {
   try {
@@ -184,7 +184,21 @@ const GetExcelWebniarinfo = async (req, res, next) => {
     next(error);
   }
 };
-
+//9. user load after user login only for loggin user 
+    const LoadUser=async(req,res,next)=>{
+         try{
+             const user=await UserModel.findById(req.userid);
+            if(!user) return next(new ErrorHandeler("user not found",404));
+              res.status(200).send({
+                 success:true,
+                 data:user,
+                isLoggedIn:true
+              })
+         }catch(error){
+            console.log("The error from load user",error);
+             next(error)
+         }
+    }
 module.exports = {
   RegisterForconsaltation,
   RegisterForExcelWebniar,
@@ -194,4 +208,5 @@ module.exports = {
   GetGermanCourse,
   GetExcelCourse,
   GetExcelWebniarinfo,
+  LoadUser
 };

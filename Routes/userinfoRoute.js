@@ -9,7 +9,8 @@ const{GetWhiteCard,
     GetGermanCourse,
     GetExcelCourse,
     GetExcelWebniarinfo,
-    RegisterForconsaltation
+    RegisterForconsaltation,
+    LoadUser
   }=require("../controllers/infoForUsers")
 
 const Router = express.Router();  
@@ -37,5 +38,6 @@ Router.route("/user/white-card").get(GetWhiteCard)
 
 //8. get excel webniar info 
 Router.route("/user/excel-webniar-info").get(GetExcelWebniarinfo)
-
+//9. user load route for loggin user 
+Router.route("/user/load-user-info").get(isAuthCheak,LoadUser)
 module.exports=Router;
