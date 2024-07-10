@@ -33,7 +33,11 @@
     const errors = Object.values(err.errors).map((error) => error.message);
     err = new ErrorHandeler(errors, 400);
   }
-
+     // when database service is turn off 
+  if (err.name === "MongooseError") {
+    const message = "Unable to connect to the database. Please try again later.";
+    err = new ErrorHandeler(message, 500);
+}
         res.status(err.statuscode).json({
           success: false,
           message: err.message,
