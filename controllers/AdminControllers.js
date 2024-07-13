@@ -171,7 +171,7 @@ const CreateCard = async (req, res, next) => {
       return next(new Error("Temporary file path is missing or invalid"));
     }
     const myCloud = await cloudinary.v2.uploader.upload(filePath, {
-      folder: "pdf",
+      folder: "pdf",  // folder name will be WhiteCard when use clinet main id 
       resource_type: "auto",
     });
     console.log("myCloud", myCloud);
