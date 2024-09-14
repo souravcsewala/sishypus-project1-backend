@@ -2,7 +2,7 @@ const UserModel = require("../models/userModel");
 
 const ContactModel = require("../models/contactModel");
 const ErrorHandeler = require("../special/errorHandelar");
-const WhiteCardModel = require("../models/CardModel");
+const WhiteCardModel = require("../models/CardModel");   
 const FreeconsultancyModel = require("../models/FreeConsultation");
 const UpcomingEventsModel = require("../models/UpcominkgAllevents");
 const GermanClassModel = require("../models/GerManClassStartModel");
