@@ -9,7 +9,7 @@
                try{
                      const {token}=req.cookies;
                          if(!token){
-                              return next(new ErrorHandelar("এতো আলসে কেন ভাই, প্রথমে registration করো তারপর login করে message পাঠাও",404))
+                              return next(new ErrorHandelar("To Access this site , please first login",404))
                          }
                           const decodeToken= JWt.verify(token,process.env.JWT_SECRET)
                               req.user= await User.findById(decodeToken._id);
