@@ -60,10 +60,14 @@ const UserLogin = async (req, res, next) => {
 //3. user logout
 const userLogout = async (req, res, next) => {
   try {
-    res.cookie("token", null, {
-      expires: new Date(Date.now()),
+    res.cookie("token", "", {
+      expires: new Date(Date.now() - 3600 * 1000), // Set expiration date to the past
       httpOnly: true,
+      path: "/", // Ensure the path matches the one used when setting the cookie
+      sameSite: "None", // Match the SameSite attribute used when setting the cookie
+      secure: process.env.NODE_ENV === 'production', // Ensure secure attribute matches the one used when setting the cookie
     });
+
     res.status(200).json({
       success: true,
       message: "Logged Out",
@@ -73,5 +77,6 @@ const userLogout = async (req, res, next) => {
     next(error);
   }
 };
+
 
 module.exports = { UserRegister, UserLogin, userLogout };
