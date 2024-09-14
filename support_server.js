@@ -1,6 +1,6 @@
 const express = require("express");
 const { DataBaseconnection } = require("./Database/DBconnection");
-const errorMiddliware = require("./middileware/errorMiddileware");
+const errorMiddliware = require("./middileware/errorMiddileware");  
 const ErrorHandler = require("./special/errorHandelar")
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
