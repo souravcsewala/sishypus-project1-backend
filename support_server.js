@@ -20,18 +20,18 @@ support_server.use(
   })
 );
 // cors policy
-// const corsOptions = {
-//   origin: ["http://localhost:5173", "http://localhost:3000", "https://www.supplyprovision.com/", "https://supplyprovision.com/"],
-//   methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
-//   credentials: true,
-// };
-// support_server.use(cors(corsOptions));
-support_server.use(
-  cors({
-    origin: ["http://localhost:3000", "https://www.supplyprovision.com/", "https://supplyprovision.com/"],
-    credentials: true,
-  })
-);
+ const corsOptions = {
+   origin: ["http://localhost:5173", "http://localhost:3000", "https://www.supplyprovision.com/", "https://supplyprovision.com/"],
+   methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
+   credentials: true,
+};
+ support_server.use(cors(corsOptions));
+// support_server.use(
+//   cors({
+//     origin: ["http://localhost:3000", "https://www.supplyprovision.com/", "https://supplyprovision.com/"],
+//     credentials: true,
+//   })
+// );
 
 // Morgan for logging
 support_server.use(
