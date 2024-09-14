@@ -1,6 +1,6 @@
 
    
-     const ErrorHandelar=require("../special/errorHandelar");
+     const ErrorHandelar=require("../special/errorHandelar");    
 
      const JWt=require("jsonwebtoken");
        const User=require("../models/userModel")
