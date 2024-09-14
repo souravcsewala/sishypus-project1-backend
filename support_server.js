@@ -28,7 +28,7 @@ support_server.use(
 // support_server.use(cors(corsOptions));
 support_server.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:3000", "https://www.supplyprovision.com/", "https://supplyprovision.com/"],
     credentials: true,
   })
 );
