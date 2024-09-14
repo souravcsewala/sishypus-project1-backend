@@ -8,7 +8,7 @@ Router.route("/userRegister").post(UserRegister);
 // 2. user Login Route 
 Router.route("/userLogin").post(UserLogin)
 //3. user logout 
-  Router.route("/userlogout").get(userLogout);
+  Router.route("/userlogout").post(userLogout);
 
  
 

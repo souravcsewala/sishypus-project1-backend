@@ -29,6 +29,21 @@ const {UserDetailsAll,
      CreateGermanClassDate,
      UpdateGermanClass,
      DeleteGermanClass,
+     RemoveUser,
+     getUserdetails,
+     getFacultydetails,
+     updateConsultStatus,
+     getconsultdetails,
+     RemoveConsult,
+     updateMessagestatus,
+     GetMessageDetails,
+     RemoveMessge,
+     updateEventstatus,
+     getEventdetails,
+     getExceldetails,
+     getGermandetails,
+     getCarDdetails
+    
      
 }=require("../controllers/AdminControllers")
 const{GetWhiteCard,
@@ -36,7 +51,8 @@ const{GetWhiteCard,
   GetGermanClass,
   GetGermanCourse,
   GetExcelCourse,
-  GetExcelWebniarinfo
+  GetExcelWebniarinfo,
+ 
 }=require("../controllers/infoForUsers")
 const Router = express.Router();  
     //1. get all user detail which are register -- admin power 
@@ -49,7 +65,7 @@ const Router = express.Router();
     Router.route("/admin/getAllinstructor").get(isAuthCheak,isAdminCheak("admin"),GetInstructorDetails)
 
     //4. update instructor by admin -- admin power 
-    Router.route("/admin/update/instructor/:id").put(isAuthCheak,isAdminCheak("admin"), UpdateInstructor)
+    Router.route("/admin/update/faculty/:id").put(isAuthCheak,isAdminCheak("admin"), UpdateInstructor)
 
     // 5. delete any instructor by admin -- admin power 
      Router.route("/admin/delete/instructor/:id").delete(isAuthCheak,isAdminCheak("admin"),RemoveInstructor )
@@ -136,8 +152,46 @@ Router.route("/admin/getexcelcourse").get(isAuthCheak,isAdminCheak("admin"),GetE
 //32. get excel webniar info 
 Router.route("/admin/excel-webniar-info").get(isAuthCheak,isAdminCheak("admin"),GetExcelWebniarinfo)
 
+//33. delete any register user  by admin -- admin power 
+Router.route("/admin/delete/user/:id").delete(isAuthCheak,isAdminCheak("admin"), RemoveUser )
 
+//34.get user details by admin 
+Router.route("/admin/getuserdetails/:userId").get(isAuthCheak,isAdminCheak("admin"),getUserdetails)
 
+//35. get faculty details by admin 
+Router.route("/admin/facultydetails/:facultyId").get(isAuthCheak,isAdminCheak("admin"),getFacultydetails)
 
+//36. update consult status 
+Router.route("/api/consultations/:consultId/seen").patch(isAuthCheak,isAdminCheak("admin"),updateConsultStatus)
+
+//37. get consult details 
+Router.route("/api/consultations/:consultId").get(isAuthCheak,isAdminCheak("admin"),getconsultdetails)
+
+//38. consult delete 
+Router.route("/api/consultations/:consultId/remove").delete(isAuthCheak,isAdminCheak("admin"),RemoveConsult)
+
+//39. message seen status update 
+  
+Router.route("/api/Messages/:MessageId/seen").patch(isAuthCheak,isAdminCheak("admin"),updateMessagestatus)
+
+//40. get message details 
+Router.route("/api/MessageDetails/:MessageId").get(isAuthCheak,isAdminCheak("admin"),GetMessageDetails)
+
+//41. delete message 
+Router.route("/api/Messages/:MessageId/remove").delete(isAuthCheak,isAdminCheak("admin"),RemoveMessge)
+
+//42. event status change 
+Router.route("/admin/Allevents/update/status/:EventId").patch(isAuthCheak,isAdminCheak("admin"),updateEventstatus)
+ 
+//43. event details 
+Router.route("/api/EventDetails/:EventId").get(isAuthCheak,isAdminCheak("admin"),getEventdetails)
+
+//44. excel course details 
+Router.route("/api/ExcelDetails/:ExcelId").get(isAuthCheak,isAdminCheak("admin"),getExceldetails)
+//45. german course details
+Router.route("/api/germanDetails/:Id").get(isAuthCheak,isAdminCheak("admin"), getGermandetails)
+
+//46. card details 
+Router.route("/api/white-card/details/:Id").get(isAuthCheak,isAdminCheak("admin"),getCarDdetails)
            module.exports = Router;
 

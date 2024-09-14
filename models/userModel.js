@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  facultysubject:{
+    type: String,
+    default: "none",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

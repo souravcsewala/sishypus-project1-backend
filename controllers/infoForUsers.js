@@ -86,7 +86,7 @@ const GetWhiteCard = async (req, res, next) => {
       message: "White card found successfully, here is the list",
       success: true,
       totalCard: GetCard.length,
-      data: GetCard,
+       GetCard,
     });
   } catch (error) {
     console.log("The error from get white card", error);
@@ -105,7 +105,7 @@ const GetAllEvents = async (req, res, next) => {
       message: "Events found successfully, here is the list",
       success: true,
       totalEvents: GetEvents.length,
-      data: GetEvents,
+       GetEvents
     });
   } catch (error) {
     console.log("The error from get Events", error);
@@ -141,7 +141,7 @@ const GetGermanCourse = async (req, res, next) => {
       message: "course found successfully, here is the list",
       success: true,
       totalCourse: GetCourses.length,
-      data: GetCourses,
+       GetCourses,
     });
   } catch (error) {
     console.log("The error from get German courses", error);
@@ -159,7 +159,7 @@ const GetExcelCourse = async (req, res, next) => {
       message: "course excel found successfully, here is the list",
       success: true,
       totalCourse: GetCourses.length,
-      data: GetCourses,
+       GetCourses,
     });
   } catch (error) {
     console.log("The error from get excel courses", error);

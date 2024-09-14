@@ -1,6 +1,7 @@
 const express = require("express");
 const { DataBaseconnection } = require("./Database/DBconnection");
 const errorMiddliware = require("./middileware/errorMiddileware");
+const ErrorHandler = require("./special/errorHandelar")
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
@@ -20,7 +21,7 @@ support_server.use(
 );
 // cors policy
 const corsOptions = {
-  origin: ["http://127.0.0.1:5500","http://localhost:3000"],
+  origin: ["http://localhost:5173"],
   methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
   credentials: true,
 };
@@ -34,7 +35,16 @@ support_server.use(
 );
 
 // database connect come on sourav
-DataBaseconnection();
+// Use database connection middleware
+const StartDatabase = async () => {
+  try {
+    await DataBaseconnection();
+  } catch (error) {
+    support_server.use((req, res, next) => {
+      next(error);
+    });
+  } }
+  StartDatabase();
 // card pdf files upload on cloudinary
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_NAME,

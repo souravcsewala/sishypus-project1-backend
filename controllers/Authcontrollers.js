@@ -7,7 +7,7 @@ const sendToken = require("../special/jwtToken");
 // 1. User register
 const UserRegister = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role, facultysubject } = req.body;
     if (!name || !email || !password) {
       return next(new ErrorHandeler("Please provide all details", 401));
     }
@@ -15,6 +15,8 @@ const UserRegister = async (req, res, next) => {
       name,
       email,
       password,
+      role,
+      facultysubject
     });
     res.status(201).json({
       success: true,
