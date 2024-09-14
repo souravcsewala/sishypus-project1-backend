@@ -21,7 +21,7 @@ support_server.use(
 );
 // cors policy
  const corsOptions = {
-   origin: ["http://localhost:5173", "http://localhost:3000", "https://www.supplyprovision.com/", "https://supplyprovision.com/"],
+   origin: ["http://localhost:5173", "http://localhost:3000", "https://www.supplyprovision.com", "https://supplyprovision.com"],
    methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
    credentials: true,
 };
