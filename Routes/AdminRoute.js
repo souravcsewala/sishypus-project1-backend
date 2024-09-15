@@ -1,7 +1,7 @@
 
 const express = require("express");
 
-const{isAuthCheak}=require("../middileware/IsAuthCheck")
+const{isAuthCheak}=require("../middileware/IsAuthCheck")    
 const{isAdminCheak}=require("../middileware/IsAdminCheck")     
 const {UserDetailsAll,
     AllMessagefromUser,
