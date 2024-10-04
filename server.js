@@ -7,7 +7,7 @@ const LETSGOSERVER = () => {
   try {
     support_server.listen(PORT, () => {
       console.log(
-        `Server is running on port ${PORT}`.yellow.bold.underline
+        `Server is running on port ${PORT}`.bgCyan.bold.underline
       );
     });
   } catch (error) {
