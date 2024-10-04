@@ -7,7 +7,7 @@ const DataBaseconnection = async () => {
     await mongoose.connect(dbUrl);
     console.log(`Database is connected to ${mongoose.connection.host}`.bgMagenta.bold.underline);
   } catch (error) {
-    console.log(`the problem from database ${error}`);
+    console.log(`the problem from database ${error}`);   
   }
 };
 module.exports = { DataBaseconnection };
