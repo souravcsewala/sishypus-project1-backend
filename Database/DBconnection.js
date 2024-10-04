@@ -5,7 +5,7 @@ const dbUrl = process.env.MONGODB_URL_Test;
 const DataBaseconnection = async () => {
   try {
     await mongoose.connect(dbUrl);
-    console.log(`Database is connected to ${mongoose.connection.host}`);
+    console.log(`Database is connected to ${mongoose.connection.host}`.bgMagenta.bold.underline);
   } catch (error) {
     console.log(`the problem from database ${error}`);
   }
