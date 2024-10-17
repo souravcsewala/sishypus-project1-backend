@@ -9,6 +9,15 @@ const support_server = express();
 const cloudinary = require("cloudinary");
 var cors = require("cors");
 const morgan = require("morgan");
+// Enable trust proxy to get client IP from reverse proxy
+support_server.set('trust proxy', true);
+
+// Middleware for logging real client IP
+support_server.use((req, res, next) => {
+  const clientIp = req.headers['x-forwarded-for'] || req.ip;
+  console.log(`Request from IP: ${clientIp}`);
+  next();
+});
 // middileware for json,file,cookies,body parsing
 support_server.use(express.json());
 support_server.use(cookieParser());
@@ -36,7 +45,7 @@ support_server.use(
 // Morgan for logging
 support_server.use(
   morgan(
-    ":method :url :status :res[content-length] - :response-time ms :remote-addr"
+    ":method :url :status :res[content-length] - :response-time ms :remote-addr :req[header:x-forwarded-for]"
   )
 );
 
