@@ -1,40 +1,102 @@
-const WebniarModel=require("../models/WebniarModel");
-const ErrorHandelar = require("../special/errorHandelar");
+const CourseModel = require("../models/CourseModel"); 
+const ErrorHandelar = require("../special/errorHandelar"); 
 
-      // 1.  get the list who submit free consultancy list 
+//!1. Get faculty courses by email
+const GetFacultyCourse = async (req, res) => {
+  const { email } = req.query; 
+  if (!email) {
+    return res.status(400).json({
+      success: false,
+      message: "Faculty email is required",
+    });
+  }
+  try {
+      const courses = await CourseModel.find({
+      "aboutFaculty.email": email,
+    }).select("title image description duration price discountprice classes");
+       if (!courses || courses.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No courses found for this faculty email",
+      });
+    }
+      res.status(200).json({
+      success: true,
+      data: courses,
+    });
+  } catch (error) {
+    console.error("Error fetching courses for faculty:", error);
 
-      //2.create up coming events 
+  }
+};
 
-      // 3. update up coming events 
+//!2. get faculty under course class --- faculty 
 
-      // 4. delete up coming events 
+const GetFacultyunderCourseClass = async (req, res) => {
+      try {
+        const course = await CourseModel.findById(req.params.id);
+        if (!course) {
+          return res.status(404).json({
+            success: false,
+            message: "Course not found",
+          });
+        }
+        res.status(200).json({ success: true, data: course });
+      } catch (error) {
+        console.error("Error fetching course:", error);
+        res.status(500).json({
+          success: false,
+          message: "Failed to fetch course class faculty",
+          error: error.message,
+        });
+      }
+    };
 
-      // 5. create german class start date 
+//!3. add class by faculty --- faculty 
 
-      //6.  update german class start date 
+const AddClassByFaculty= async (req, res) => {
+      const { id } = req.params;
+      const {
+        title,
+        description,
+        classJoinLink,
+        classType,
+        date,
+        time,
+        NotesUrl,
+        RecordVideoUrl,
+      } = req.body;
+    
+      try {
+       
+        if (!title || !description || !classType) {
+          return res.status(400).json({ error: "Missing required fields" });
+        }
+        
+        const course = await CourseModel.findById(id);
+        if (!course) {
+          return res.status(404).json({ error: "Course not found" });
+        }
+       
+        const newClass = {
+          title,
+          description,
+          classJoinLink,
+          classType,
+          date: classType === "upcoming" ? date : null,
+          time: classType === "upcoming" ? time : null,
+          NotesUrl: classType === "recorded" ? NotesUrl : null,
+          RecordVideoUrl: classType === "recorded" ? RecordVideoUrl : null,
+        };
+            
+        course.classes.push(newClass);
+        await course.save();
+    
+        res.status(201).json({ message: "Class added successfully", data: newClass });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to add class" });
+      }
+    };
 
-      // 7. delete german class start date 
-
-      // 8. german course create 
-
-      // 9. german course update 
-
-      // 10. german course delete 
-
-      // 11. excel course  create
-      
-      // 12. excel course  update
-
-      // 13.  excel course  delete 
-
-      // 14. create excel webniar date And url 
-
-      // 15. update excel webniar date And url 
-
-      // 16. delete excel webniar date And url 
-
-      // 17. get vthe list who resigtration on excel webniar 
-
-             
-
-                 
+module.exports = { GetFacultyCourse ,GetFacultyunderCourseClass,AddClassByFaculty};

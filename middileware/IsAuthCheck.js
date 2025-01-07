@@ -1,27 +1,45 @@
+const ErrorHandler = require("../special/errorHandelar");
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 
-   
-     const ErrorHandelar=require("../special/errorHandelar");    
+const isAuthCheak = async (req, res, next) => {
+  try {
+    const token = req.header("x-auth-token");
 
-     const JWt=require("jsonwebtoken");
-       const User=require("../models/userModel")
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "No auth token, access denied.",
+      });
+    }
 
-       const isAuthCheak=async(req,res,next)=>{
-               try{
-                     const {token}=req.cookies;
-                         if(!token){
-                              return next(new ErrorHandelar("To Access this site , please first login",404))
-                         }
-                          const decodeToken= JWt.verify(token,process.env.JWT_SECRET)
-                              req.user= await User.findById(decodeToken._id);
-                               req.userid=req.user._id;
-                               req.userName=req.user.name;
-                                  console.log("req.userid:",req.user._id)
+    
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decodedToken) {
+      return res.status(401).json({
+        success: false,
+        message: "Token verification failed, authorization denied.",
+      });
+    }
 
-                                next();
-               }catch(error){
-                    console.log(`the error from isAuthCheak ${error}`);
-                    
-               }
-       }
+    
+    const user = await User.findById(decodedToken._id);
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
 
-          module.exports={isAuthCheak}
+    
+    req.user = user;
+    req.userid = user._id;
+    req.userName = user.name;
+    req.userRole = user.role;
+
+    console.log("Authenticated as user, req.userid:", user._id);
+    next();
+  } catch (error) {
+    console.error("Error in isAuthCheck middleware:", error);
+    next(error);
+  }
+};
+
+module.exports = { isAuthCheak };

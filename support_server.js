@@ -9,15 +9,6 @@ const support_server = express();
 const cloudinary = require("cloudinary");
 var cors = require("cors");
 const morgan = require("morgan");
-// Enable trust proxy to get client IP from reverse proxy
-support_server.set('trust proxy', true);
-
-// Middleware for logging real client IP
-support_server.use((req, res, next) => {
-  const clientIp = req.headers['x-forwarded-for'] || req.ip;
-  console.log(`Request from IP: ${clientIp}`);
-  next();
-});
 // middileware for json,file,cookies,body parsing
 support_server.use(express.json());
 support_server.use(cookieParser());
@@ -25,12 +16,12 @@ support_server.use(bodyParser.urlencoded({ extended: true }));
 support_server.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: "/tmp/", // note: The /tmp/ directory is a special directory on Unix-like operating systems (such as Linux and macOS) that is used to store temporary files. This directory usually already exists and is managed by the operating system. Applications are generally permitted to create temporary files within this directory without needing to create it themselves.
+    tempFileDir: "/tmp/", // souravnote: The /tmp/ directory is a special directory on Unix-like operating systems (such as Linux and macOS) that is used to store temporary files. This directory usually already exists and is managed by the operating system. Applications are generally permitted to create temporary files within this directory without needing to create it themselves.
   })
 );
 // cors policy
  const corsOptions = {
-   origin: ["http://localhost:5173", "http://localhost:3000", "https://www.supplyprovision.com", "https://supplyprovision.com","https://supply-chain-frontend-virid.vercel.app"],
+  origin: "*",
    methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
    credentials: true,
 };
@@ -45,7 +36,7 @@ support_server.use(
 // Morgan for logging
 support_server.use(
   morgan(
-    ":method :url :status :res[content-length] - :response-time ms :remote-addr :req[header:x-forwarded-for]"
+    ":method :url :status :res[content-length] - :response-time ms :remote-addr"
   )
 );
 
@@ -74,11 +65,19 @@ support_server.get("/", (req, res) => {
 // other routes
 support_server.use("/sisyphus/project1/api", require("./Routes/AuthRoute"));
 support_server.use("/sisyphus/project1/api", require("./Routes/MessageRoute"));
-support_server.use("/sisyphus/project1/api", require("./Routes/AdminRoute"));
+support_server.use("/sisyphus/project1/api/", require("./Routes/AdminRoute"));
 support_server.use("/sisyphus/project1/api", require("./Routes/userinfoRoute"));
 support_server.use(
   "/sisyphus/project1/api",
   require("./Routes/instructorRoute")
+);
+support_server.use(
+  "/sisyphus/project1/api",
+  require("./Routes/OrderRoute")
+);
+support_server.use(
+  "/sisyphus/project1/api",
+  require("./Routes/StudentRoute")
 );
 
 // error middileware
