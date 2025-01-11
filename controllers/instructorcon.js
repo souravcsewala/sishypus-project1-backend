@@ -99,4 +99,121 @@ const AddClassByFaculty= async (req, res) => {
       }
     };
 
-module.exports = { GetFacultyCourse ,GetFacultyunderCourseClass,AddClassByFaculty};
+//!4. delete a class under a particular course--- facultyu 
+
+const DeleteClassUnderCourse = async (req, res) => {
+  try {
+    const { classId, courseId } = req.params;
+
+    
+    const course = await CourseModel.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    
+    const result = await CourseModel.updateOne(
+      { _id: courseId },
+      { $pull: { classes: { _id: classId } } }
+    );
+
+   
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "Class not found or already deleted" });
+    }
+
+    
+    return res.status(200).json({ message: "Class deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting class under course faculty", error);
+    return res.status(500).json({ message: "Error deleting class" });
+  }
+};
+
+//!5. get class details --- faculty 
+
+const getClassDetails = async (req, res) => {
+  try {
+    const { courseId, classId } = req.params;
+
+   
+    const course = await CourseModel.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    
+    const classDetails = course.classes.id(classId); 
+    if (!classDetails) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+    res.status(200).json({ data: classDetails });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+//!6. edit the class details --- faculty 
+const updateClass = async (req, res) => {
+  try {
+    const { courseId, classId } = req.params;
+
+    
+    const course = await CourseModel.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    const classDetails = course.classes.id(classId);
+    if (!classDetails) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+   
+    const {
+      title,
+      description,
+      classJoinLink,
+      classType,
+      date,
+      time,
+      NotesUrl,
+      RecordVideoUrl,
+    } = req.body;
+
+    classDetails.title = title || classDetails.title;
+    classDetails.description = description || classDetails.description;
+    classDetails.classJoinLink = classJoinLink || classDetails.classJoinLink;
+    classDetails.classType = classType || classDetails.classType;
+    classDetails.date = date || classDetails.date;
+    classDetails.time = time || classDetails.time;
+    classDetails.NotesUrl = NotesUrl || classDetails.NotesUrl;
+    classDetails.RecordVideoUrl = RecordVideoUrl || classDetails.RecordVideoUrl;
+
+    
+    await course.save();
+
+    res.status(200).json({ message: "Class updated successfully", data: classDetails });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+module.exports = { GetFacultyCourse ,GetFacultyunderCourseClass,
+  AddClassByFaculty,
+  DeleteClassUnderCourse,
+  getClassDetails,
+  updateClass};

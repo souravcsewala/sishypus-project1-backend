@@ -20,14 +20,24 @@ const { CreateCard,
     CreateGermanClassDate,
     UpdateGermanClass,
     DeleteGermanClass,}=require("../controllers/AdminControllers")
-const {GetWhiteCard,
+
+
+    const {GetWhiteCard,
     GetAllEvents,
     GetGermanClass,
     GetGermanCourse,
     GetExcelCourse,
     GetExcelWebniarinfo}=require("../controllers/infoForUsers")
 
-    const{GetFacultyCourse,GetFacultyunderCourseClass,AddClassByFaculty}=require("../controllers/instructorcon")
+
+
+    const{GetFacultyCourse,GetFacultyunderCourseClass,
+        AddClassByFaculty,
+        DeleteClassUnderCourse,
+        getClassDetails,
+        updateClass}=require("../controllers/instructorcon")
+
+
     const Router = express.Router();
 
    //! 1. create  whitepaper card with pdf file by admin -- admin power 
@@ -117,6 +127,16 @@ Router.route("/faculty/get-course/:id/class").get(isAuthCheak,isAdminCheak("facu
 
 //!29.  create class under the course
 Router.route("/faculty/under-course/:id/addclass").post(isAuthCheak,isAdminCheak("faculty"),AddClassByFaculty)
+
+//!30. delete class under a course -- faculty 
+Router.route("/faculty/under-course/:courseId/:classId/Removeclass").delete(isAuthCheak,isAdminCheak("faculty"),DeleteClassUnderCourse)
+
+//!31. get class details under a particular course --- faculty 
+Router.route("/faculty/under-course/:courseId/:classId/getclassdetails").get(isAuthCheak,isAdminCheak("faculty"),getClassDetails)
+
+//!32. edit class under a particular course -- faculty 
+Router.route("/faculty/under-course/:courseId/:classId/editclassdetails").put(isAuthCheak,isAdminCheak("faculty"),updateClass)
+
 
         module.exports = Router;
 
