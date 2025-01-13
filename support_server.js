@@ -37,7 +37,7 @@ support_server.set("trust proxy",true)
 // Morgan for logging
 support_server.use(
   morgan(
-    ":method :url :status :res[content-length] - :response-time ms :remote-addr Client-IP: :req[X-Forwarded-For]"
+    ":method :url :status :res[content-length] - :response-time ms :remote-addr "
   )
 );
 
