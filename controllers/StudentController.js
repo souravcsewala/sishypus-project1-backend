@@ -65,7 +65,7 @@ exports.getUserOrders = async (req, res) => {
   try {
     const userId = req.userid; 
     const orders = await Order.find({ userId })
-      .populate("courseId", "title image price discountprice")
+      .populate("courseId", "title image price discount")
       .exec();
 
     if (!orders) {
@@ -90,7 +90,7 @@ exports.getOrderDetails = async (req, res) => {
     const { orderId } = req.params; 
    
     const order = await Order.findById(orderId)
-      .populate("courseId", "title image price discountprice") 
+      .populate("courseId", "title image price discount") 
       .exec();
 
     if (!order) {
