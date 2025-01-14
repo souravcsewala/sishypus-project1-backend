@@ -273,7 +273,7 @@ const UpdateCard = async (req, res, next) => {
     next(error);
   }
 };
-//! 9. delete a card byadmin --admin power
+//! 9. delete a card by admin --admin power
 
 const CardDelete = async (req, res, next) => {
   try {
