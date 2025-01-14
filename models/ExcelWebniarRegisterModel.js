@@ -40,6 +40,10 @@ const ExcelWebniarRegisterSchema = new Schema({
     type: String,
     required: [true, "please enter your  address"],
   },
+  seen:{
+    type: Boolean,
+    default: false
+  }
 });
 
 const ExcelWebniarRegisterModel = new model(

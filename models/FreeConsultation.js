@@ -36,7 +36,19 @@ const ConsultancySchema = new mongoose.Schema({
     type: String,
     required: [true, "please enter your  message"],
   },
-});
+  seen:{
+    type:Boolean,
+    default:false
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,  
+  },
+
+},
+{ timestamps: true }
+
+);
 
 const ConsultancyModel = mongoose.model("free consulnt", ConsultancySchema);
 

@@ -27,7 +27,17 @@ const contactschema = new Schema({
     type: String,
     required: [true, "plz type message"],
   },
-});
+  seen:{
+    type:Boolean,
+    default:false
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,  
+  },
+},
+{ timestamps: true }
+);
 // create model
 const Contact = new model("Contact", contactschema);
 

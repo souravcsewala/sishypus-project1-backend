@@ -4,11 +4,10 @@ const ExcelWebniarRegisterModel = require("../models/ExcelWebniarRegisterModel")
 const WhiteCardModel = require("../models/CardModel");
 const UpcomingEventsModel = require("../models/UpcominkgAllevents");
 const GermanClassModel = require("../models/GerManClassStartModel");
-const GermanCourseModel = require("../models/GermanCourseModel");
-const ExcelCourseModel = require("../models/ExelCourseModel");
+const CourseModel=require("../models/CourseModel")
 const ExcelWebniarModel = require("../models/ExcelWebniarModel");
 const UserModel=require("../models/userModel")
-//1. user post for free consultation -- for user
+//!1. user post for free consultation -- for user
 const RegisterForconsaltation = async (req, res, next) => {
   try {
     const { name, email, countryCode, phone, subject, message } = req.body;
@@ -34,7 +33,7 @@ const RegisterForconsaltation = async (req, res, next) => {
   }
 };
 
-//2. user post register for excel webniar -- for user
+//!2. user post register for excel webniar -- for user
 const RegisterForExcelWebniar = async (req, res, next) => {
   try {
     const {
@@ -75,7 +74,7 @@ const RegisterForExcelWebniar = async (req, res, next) => {
     next(error);
   }
 };
-//3. get white card -- for user,admin,instructor
+//!3. get white card -- for user,admin,instructor
 const GetWhiteCard = async (req, res, next) => {
   try {
     const GetCard = await WhiteCardModel.find({});
@@ -86,7 +85,7 @@ const GetWhiteCard = async (req, res, next) => {
       message: "White card found successfully, here is the list",
       success: true,
       totalCard: GetCard.length,
-      data: GetCard,
+       GetCard,
     });
   } catch (error) {
     console.log("The error from get white card", error);
@@ -94,7 +93,7 @@ const GetWhiteCard = async (req, res, next) => {
   }
 };
 
-//4. get upcoming events -- for user,admin,instructor
+//!4. get upcoming events -- for user,admin,instructor
 const GetAllEvents = async (req, res, next) => {
   try {
     const GetEvents = await UpcomingEventsModel.find({});
@@ -105,14 +104,14 @@ const GetAllEvents = async (req, res, next) => {
       message: "Events found successfully, here is the list",
       success: true,
       totalEvents: GetEvents.length,
-      data: GetEvents,
+       GetEvents
     });
   } catch (error) {
     console.log("The error from get Events", error);
     next(error);
   }
 };
-//5. get german class start info --for user,admin,instructor
+//!5. get german class start info --for user,admin,instructor
 const GetGermanClass = async (req, res, next) => {
   try {
     const GetClass = await GermanClassModel.find({});
@@ -130,43 +129,58 @@ const GetGermanClass = async (req, res, next) => {
     next(error);
   }
 };
-//6. get german course -- for user,admin,instructor
+//!6. get german course -- for user,admin,instructor
 const GetGermanCourse = async (req, res, next) => {
   try {
-    const GetCourses = await GermanCourseModel.find({});
+    const GetCourses = await CourseModel.find({ typeofcourse: "german language" });
+
     if (!GetCourses || GetCourses.length === 0) {
-      return next(new ErrorHandeler("No course found", 404));
+      return res.status(200).send({
+        message: "till no course create",
+        success: true,
+        totalCourse: GetCourses.length,
+        GetCourses,
+      });
     }
+
     res.status(200).send({
       message: "course found successfully, here is the list",
       success: true,
       totalCourse: GetCourses.length,
-      data: GetCourses,
+      GetCourses,
     });
   } catch (error) {
     console.log("The error from get German courses", error);
     next(error);
   }
 };
-//7. get excel course -- for user,admin,instructor
+
+//!7. get excel course -- for user,admin,instructor
 const GetExcelCourse = async (req, res, next) => {
   try {
-    const GetCourses = await ExcelCourseModel.find({});
-    if (!GetCourses || GetCourses.length === 0) {
-      return next(new ErrorHandeler("No course found", 404));
-    }
+    const GetCourses = await CourseModel.find({typeofcourse:'excel'});
+   
+      if (!GetCourses || GetCourses.length === 0) {
+        return res.status(200).send({
+          message: "till no course create",
+          success: true,
+          totalCourse: GetCourses.length,
+          GetCourses,
+        });
+      }
+    
     res.status(200).send({
       message: "course excel found successfully, here is the list",
       success: true,
       totalCourse: GetCourses.length,
-      data: GetCourses,
+       GetCourses,
     });
   } catch (error) {
     console.log("The error from get excel courses", error);
     next(error);
   }
 };
-//8. get excel webniar info -- for user,admin,instructor
+//!8. get excel webniar info -- for user,admin,instructor
 const GetExcelWebniarinfo = async (req, res, next) => {
   try {
     const GetWebniar = await ExcelWebniarModel.find({});
@@ -184,7 +198,7 @@ const GetExcelWebniarinfo = async (req, res, next) => {
     next(error);
   }
 };
-//9. user load after user login only for loggin user 
+//?9. user load after user login only for loggin user 
     const LoadUser=async(req,res,next)=>{
          try{
              const user=await UserModel.findById(req.userid);
