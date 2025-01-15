@@ -110,7 +110,10 @@ console.log("Razorpay Signature:", razorpay_signature);
       //* Step 2: Update payment status and transaction ID in the database
       const order = await OrderModel.findOneAndUpdate(
         { orderId: razorpay_order_id },
-        { paymentStatus: "paid", transactionId: razorpay_payment_id },
+        { paymentStatus: "paid",
+          transactionId: razorpay_payment_id,
+           
+           },
         { new: true }
       );
   
