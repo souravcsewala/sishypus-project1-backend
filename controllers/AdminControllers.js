@@ -1046,7 +1046,7 @@ const fetchStudents = async (req, res) => {
           buycourses: user.Buycourses.map((course) => ({
             title: course.title,
             price: course.price,
-            discountprice: course.discountprice,
+            discountprice: course.discount,
             duration: course.duration,
           })),
           payments: orders.map((order) => ({
