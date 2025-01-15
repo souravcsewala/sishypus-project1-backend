@@ -61,7 +61,7 @@ cloudinary.v2.config({
 
 // routes path home
 support_server.get("/", (req, res) => {
-  res.send("hii this sisyphus project1 server by sourav,test api ");
+  res.send("Server is Up and Running");
 });
 // other routes
 support_server.use("/sisyphus/project1/api", require("./Routes/AuthRoute"));
