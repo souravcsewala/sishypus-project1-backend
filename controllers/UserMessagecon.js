@@ -1,7 +1,7 @@
 const ContactModel = require("../models/contactModel");
 const ErrorHandeler = require("../special/errorHandelar");
 
-//1. send message
+//!1. send message
 
 const SendMessage = async (req, res, next) => {
   try {
