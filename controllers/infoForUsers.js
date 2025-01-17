@@ -10,17 +10,16 @@ const UserModel=require("../models/userModel")
 //!1. user post for free consultation -- for user
 const RegisterForconsaltation = async (req, res, next) => {
   try {
-    const { name, email, countryCode, phone, subject, message } = req.body;
-    if (!name || !email || !countryCode || !phone || !subject || !message) {
+    const { name, email, phone, subject, message } = req.body;
+    if (!name || !email  || !phone || !subject || !message) {
       return next(new ErrorHandeler("please provide all details", 400));
     }
     const Register = await FreeconsultancyModel.create({
       name,
       email,
-      countryCode,
-      phone,
-      subject,
-      message,
+     phone,
+    subject,
+    message,
     });
     res.status(201).json({
       message: "you have successfully register for free consaltation",
